@@ -11,14 +11,15 @@ exports.getNote = async (text) => {
         //noteModel.createIndexes({indexing: 'text'})
         noteModel.createIndexes();
 
-        noteModel
+        const result = await noteModel
             .find({$text: {$search: `"\"${text}\""`}})
-            .then((data) => {
-                console.log('NoteService/getNote data : ' + data);
+            // .then((data) => {
+            //     console.log('NoteService/getNote data : ' + data);
 
-                return {result : data};
-            })
-            .catch((err) => {console.log(err)});
+            //     return data;
+            // })
+            // .catch((err) => {console.log(err)});
+            return result;
 
 
     }catch(err){

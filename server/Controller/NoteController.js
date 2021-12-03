@@ -11,10 +11,13 @@ exports.getNote = async (req, res, next) => {
     }
 
     try{
-        let returnValue = await noteService.getNote(text);
+        let resultData = await noteService.getNote(text);
 
-        console.log('NoteController/getNote : ' + returnValue);
-        return res.status(200).send({result: returnValue});
+        console.log('NoteController/getNote : ' + resultData);
+        //return res.status(200).send({message: returnValue});
+
+        return res.status(200).json({status: 200, data: res.data, message: 'read success'});
+        
     }catch(err){
         console.log('NoteController/getNote ERROR : ' + err);
         return res.status(500).json(err);
