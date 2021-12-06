@@ -1,10 +1,7 @@
 const noteModel = require('../Model/Note');
 
 exports.getNote = async (text) => {
-//Search Document 
     console.log('NoteService/getNote : ' + text);
-//요까지 와따 
-//여기서 이제 문서 select 할 수 있게 함 
 
     try{
         let resultData;
@@ -13,14 +10,7 @@ exports.getNote = async (text) => {
 
         const result = await noteModel
             .find({$text: {$search: `"\"${text}\""`}})
-            // .then((data) => {
-            //     console.log('NoteService/getNote data : ' + data);
-
-            //     return data;
-            // })
-            // .catch((err) => {console.log(err)});
             return result;
-
 
     }catch(err){
         console.log('NoteService/getNote ERROR : ' + err);
@@ -28,33 +18,52 @@ exports.getNote = async (text) => {
     }
 };
 
-exports.updateNote = async (req, res, next) => {
+/**Update */
+exports.updateNote = async (objectId, markUp, indexing) => {
+
+    try{
+        const result = noteModel.findByIdAndUpdate(
+            objectId, { 'markUp' : markUp,
+                        'indexing' : indexing}
+        );
+
+        return result;
+    }catch(err){
+        console.log('NoteService/updateNote ERROR : ' + err);
+    }
 
 };
-
 
 exports.insertNote = async (userId, noteIndex, markUp, indexing) => {
     try{
 
         let insertData = new noteModel({
-            userId : userId,
-            noteIndex: noteIndex,
-            markUp : markUp,
-            indexing : indexing
+                userId : userId,
+                noteIndex: noteIndex,
+                markUp : markUp,
+                indexing : indexing
             }
         ); 
 
-        await noteModel.create(insertData);
-        console.log('INSERT SUCCESS');
-
-
+        const returnValue = await noteModel.create(insertData);
+        console.log('INSERT SUCCESS  : ' + returnValue);
+        
+        return returnValue;
     }catch(err){
         console.log('NoteService/insertNote ERROR : ' + err);
         return res.status(500).json(err);
     }
-    
 };
 
-exports.deleteNote = async (req, res, next) => {
+exports.deleteNote = async (objectId) => {
+    
+    try{
+        const result = noteModel.deleteOne(
+            {_id: objectId}
+        );
 
+        return result;
+    }catch(err){
+        console.log('NoteService/DELETE ERROR : ' + err);
+    }
 };

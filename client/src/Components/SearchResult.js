@@ -32,13 +32,11 @@ const SearchResult = (props) => {
         //     }
         // }
 
-        axios.get('http://localhost:5000/note', {params: {text: inputText}})
+        axios.get('http://61.32.218.74:28098/note', {params: {text: inputText}})
             .then((res) => {
                 console.log(res);
                 console.log('frontend SearchResult : ' + res.data.data);
                 setResult(res.data.data);
-                //console.log('result array : ' + result[0].indexing);
-                
             })
             .catch((err) => {console.log(err)})
     }

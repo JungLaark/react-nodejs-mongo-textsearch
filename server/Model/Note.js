@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+/**Note MODEL */
 const NoteSchema = new mongoose.Schema({
      userId : {
          type: String,
