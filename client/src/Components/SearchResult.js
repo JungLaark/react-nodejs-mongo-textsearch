@@ -35,8 +35,9 @@ const SearchResult = (props) => {
         axios.get('http://localhost:5000/note', {params: {text: inputText}})
             .then((res) => {
                 console.log(res);
-                console.log('frontend SearchResult : ' + res.data.result);
-                setResult(res.data.result);
+                console.log('frontend SearchResult : ' + res.data.data);
+                setResult(res.data.data);
+                //console.log('result array : ' + result[0].indexing);
                 
             })
             .catch((err) => {console.log(err)})
@@ -46,7 +47,7 @@ const SearchResult = (props) => {
         <div> 
             {/* {props.inputText} */}
             
-              {result && result.map((data, idx) => {
+              {/* {result && result.map((data) => {
                      <ListGroup style={{
                         width: "700px",
                         height:"50px",
@@ -57,10 +58,32 @@ const SearchResult = (props) => {
                         marginBottom:"20px", 
                         margin:"0 auto",
                         marginTop:"50px"
-                      }} key={idx}>
-                        <ListGroup.Item>This ListGroup {data}</ListGroup.Item>
+                      }}>
+                        <ListGroup.Item key={data.noteIndex}>This ListGroup {data}</ListGroup.Item>
                  </ListGroup>
-              })}
+              })} */}
+
+            {result.map(data => (
+                <div style={{
+                    width: "700px",
+                    height:"50px",
+                    fontSize:"20px", 
+                    padding:"50", 
+                    display:"flex", 
+                    justifyContent:"center", 
+                    position:"relative", 
+                    
+                    margin:"0 auto",
+                    marginTop:"10px"
+                  }} > 
+                    <div key={data.noteIndex}>indexing: {data.markUp}</div>
+                    <div key={data.noteIndex}>indexing: {data.indexing}</div>
+                    <br/>
+                </div>
+                
+                
+            ))}
+
         </div>
     );
 };

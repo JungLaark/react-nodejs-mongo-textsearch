@@ -1,6 +1,6 @@
 const noteService = require('../Service/NoteService');
 
-exports.getNote = async (req, res, next) => {
+exports.getNote = async (req, res) => {
 
     console.log('NoteController getNote');
     console.log(req.query.text);
@@ -16,7 +16,9 @@ exports.getNote = async (req, res, next) => {
         console.log('NoteController/getNote : ' + resultData);
         //return res.status(200).send({message: returnValue});
 
-        return res.status(200).json({status: 200, data: res.data, message: 'read success'});
+        return res.status(200).json({status: 200, data: resultData, message: 'read success'});
+        //여기에서 data: req.result 이거였나 암튼 return 되는 데이터는 resultData 인데 
+        //왜 저걸 저렇게 줬을까. 아침에 다시 출근해서 보니 보이네 
         
     }catch(err){
         console.log('NoteController/getNote ERROR : ' + err);
